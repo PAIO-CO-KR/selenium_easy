@@ -1,0 +1,1 @@
+exports = module.exports = require('./lib/mocha_selenium_runner');
