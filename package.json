@@ -2,9 +2,9 @@
   "name": "selenium_easy",
   "version": "0.0.1",
   "description": "selenium_easy",
-  "main": "selenium_easy.js",
+  "main": "index.js",
   "bin": {
-	"selenium_easy": "./bin/selenium_easy"
+    "selenium_easy": "./bin/selenium_easy"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/apple-paio/selenium_easy",
   "dependencies": {
-    "selenium-webdriver": "^2.42.1"
+    "selenium-webdriver": "^2.42.1",
+    "mocha": "^1.21.4"
   }
 }
