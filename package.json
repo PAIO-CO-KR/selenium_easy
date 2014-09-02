@@ -1,0 +1,19 @@
+{
+  "name": "selenium_easy",
+  "version": "0.0.1",
+  "description": "selenium_easy",
+  "main": "selenium_easy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apple-paio/selenium_easy.git"
+  },
+  "author": "KyuWoo Choi <apple@paio.co.kr> (http://www.paio.co.kr/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apple-paio/selenium_easy/issues"
+  },
+  "homepage": "https://github.com/apple-paio/selenium_easy"
+}
