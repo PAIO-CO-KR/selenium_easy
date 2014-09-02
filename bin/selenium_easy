@@ -1,3 +1,10 @@
 #!/usr/bin/env node
-console.log(require('mocha'));
-console.log(process.argv);
+var fs = require('fs');
+var Mocha = require('mocha');
+var webdriver = require('selenium-webdriver');
+var SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
+
+//console.log(process.argv);
+//console.log(process.cwd());
+
+console.log(fs.realpathSync(process.argv[2]));
