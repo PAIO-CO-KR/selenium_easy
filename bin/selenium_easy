@@ -6,41 +6,47 @@ var expect = require('expect.js');
 var seleniumProvider = require('../lib/selenium_provider');
 
 var testPath = process.argv.length > 2 ? process.argv[2] : 'test'
-var browser = process.argv.length > 3 ? process.argv[3] : 'ie';
+var browser = process.argv.length > 3 ? process.argv[3] : 'chrome';
+var reporter = process.argv.length > 4 ? process.argv[4] : 'spec';
+var ui = process.argv.length > 5 ? process.argv[5] : 'bdd';
 
 var mocha = new Mocha({
-	ui: 'bdd',
-	reporter: 'list'
+	ui: ui,
+	reporter: reporter
 });
 
-var selenium = {
+var selenium_easy = {
 	driver: null,
 	webdriver: null,
 	expect: expect
 };
 
-seleniumProvider.start('ie', function (driver, webdriver) {
-	selenium.driver = driver;
-	selenium.webdriver = webdriver;
-	GLOBAL.selenium = selenium;
+seleniumProvider.start(browser, function (driver, webdriver) {
+	selenium_easy.driver = driver;
+	selenium_easy.webdriver = webdriver;
+	GLOBAL.selenium_easy = selenium_easy;
 });
 
 
-fs.readdirSync(testPath).filter(function(file){
-	// Only keep the .js files
-	return file.substr(-3) === '.js';
+if (testPath.substr(-3) === '.js') {
+	mocha.addFile(testPath);
+} else {
+	fs.readdirSync(testPath).filter(function(file){
+		// Only keep the .js files
+		return file.substr(-3) === '.js';
 
-}).forEach(function(file){
-	// Use the method "addFile" to add the file to mocha
-	mocha.addFile(
-		path.join(testPath, file)
-	);
-});
+	}).forEach(function(file){
+		// Use the method "addFile" to add the file to mocha
+		mocha.addFile(
+			path.join(testPath, file)
+		);
+	});
+}
 
 
 mocha.run(function(failures){
 	process.on('exit', function () {
-		selenium.driver.quit();
+		selenium_easy.driver.quit();
 		process.exit(failures);
 	});
 });
