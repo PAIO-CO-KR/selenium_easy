@@ -1,10 +1,46 @@
 #!/usr/bin/env node
 var fs = require('fs');
+var path = require('path');
 var Mocha = require('mocha');
-var webdriver = require('selenium-webdriver');
-var SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
+var expect = require('expect.js');
+var seleniumProvider = require('../lib/selenium_provider');
 
-//console.log(process.argv);
-//console.log(process.cwd());
+var testPath = process.argv.length > 2 ? process.argv[2] : 'test'
+var browser = process.argv.length > 3 ? process.argv[3] : 'ie';
 
-console.log(fs.realpathSync(process.argv[2]));
+var mocha = new Mocha({
+	ui: 'bdd',
+	reporter: 'list'
+});
+
+var selenium = {
+	driver: null,
+	webdriver: null,
+	expect: expect
+};
+
+seleniumProvider.start('ie', function (driver, webdriver) {
+	selenium.driver = driver;
+	selenium.webdriver = webdriver;
+	GLOBAL.selenium = selenium;
+});
+
+
+fs.readdirSync(testPath).filter(function(file){
+	// Only keep the .js files
+	return file.substr(-3) === '.js';
+
+}).forEach(function(file){
+	// Use the method "addFile" to add the file to mocha
+	mocha.addFile(
+		path.join(testPath, file)
+	);
+});
+
+
+mocha.run(function(failures){
+	process.on('exit', function () {
+		selenium.driver.quit();
+		process.exit(failures);
+	});
+});
