@@ -6,7 +6,7 @@ var expect = require('expect.js');
 var seleniumProvider = require('../lib/selenium_provider');
 
 var testPath = process.argv.length > 2 ? process.argv[2] : 'test'
-var browser = process.argv.length > 3 ? process.argv[3] : 'chrome';
+var browser = process.argv.length > 3 ? process.argv[3] : (/^win/.test(process.platform) ? 'ie' : 'chrome');
 var reporter = process.argv.length > 4 ? process.argv[4] : 'spec';
 var ui = process.argv.length > 5 ? process.argv[5] : 'bdd';
 
